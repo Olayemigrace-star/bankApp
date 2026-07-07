@@ -2,24 +2,37 @@ package bankAccount;
 
 public class Account {
     private int balance;
+    private String name;
+    private String pin;
+    private String number;
+
+    public Account(String firstName, String surName, String pin) {
+        this.name = firstName + surName;
+        this.pin = pin;
+
+    }
+
     public int getBalance() {
+
         return balance;
     }
 
     public void deposit(int amount) {
-        if(amount > 0) balance = balance + amount;
+        boolean isValidNumber = (amount > 0);
+        if (isValidNumber) balance = balance + amount;
+        else {
+            throw new IllegalArgumentException();
+        }
     }
 
-    public boolean withdraw(int amount, int pin) {
-        if (pin == 8593 && amount > 0 && balance >= amount)
-        {
+
+    public void withdraw(int amount, String pin) {
+        if ((pin.equals("8593")) && amount > 0 && balance >= amount) {
             balance = balance - amount;
-            return true;
-        }
-
-        else{
-            return false;
-        }
+        } else {
+            throw new IllegalArgumentException();
         }
     }
+}
+
 
