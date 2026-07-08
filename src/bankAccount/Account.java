@@ -1,19 +1,28 @@
 package bankAccount;
 
 public class Account {
-    private int balance;
     private String name;
+    private int balance;
     private String pin;
-    private String number;
+    private int number;
 
-    public Account(String firstName, String surName, String pin) {
+    public Account(String firstName, String surName, String pin, int number) {
         this.name = firstName + surName;
         this.pin = pin;
-
+        this.number = number;
     }
 
-    public int getBalance() {
+    public boolean isValidPin(String pin){
+        if (this.pin == pin) return true;
+        return false;
+    }
 
+    public int getNumber(){
+        return number;
+    }
+
+    public int getBalance(String pin) {
+        if (!isValidPin(pin)) throw new IllegalArgumentException("invalid pin");
         return balance;
     }
 
@@ -25,13 +34,10 @@ public class Account {
         }
     }
 
-
     public void withdraw(int amount, String pin) {
-        if ((pin.equals("8593")) && amount > 0 && balance >= amount) {
+            if (!isValidPin(pin)) throw new IllegalArgumentException("invalid pin");
+            if (amount > balance) throw new IllegalArgumentException("Insufficient fund");
             balance = balance - amount;
-        } else {
-            throw new IllegalArgumentException();
-        }
     }
 }
 
